@@ -11,6 +11,7 @@ function changeFocus(){
 	focused.className = focused.className.replace( /(?:^|\s)focus(?!\S)/g , '' );
 	this.className += " focus";
 	focused = this;
+	chrome.storage.sync.set({'focus':focused.id})
 }
 
 (function(window, document, undefined){
@@ -40,14 +41,17 @@ function changeFocus(){
 			}else{
 				focused = document.getElementById('1');
 			}
+			focused.className += " focus";
 			for (var key in blocs) {
 			  if (blocs.hasOwnProperty(key)) {
 				var bloc = document.getElementById(key);
 				bloc.addEventListener('input', saveTxt);
 				bloc.addEventListener('focus', changeFocus);
 				bloc.value = blocs[key];
+				bloc.style.display = "block"
 			  }
 			};
+			
 		});
 	};
 
