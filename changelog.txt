@@ -1,3 +1,5 @@
+0.0.2
+	-Added muliple blocs
 0.0.1
 	-Alpha version
 	-Text saved to chrome.sync

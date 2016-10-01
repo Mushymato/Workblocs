@@ -2,7 +2,7 @@
 	// Required
 	"manifest_version": 2,
 	"name": "Workblocs - New Tab",
-	"version": "0.1",
+	"version": "0.0.2",
 	// Recommended
 	//"default_locale": "en",
 	"description": "Take notes in your new tab.",

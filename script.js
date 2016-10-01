@@ -1,22 +1,41 @@
+var blocs;
+var blocsCount;
+var focused;
+
 function saveTxt(){
- 	var userInput = document.getElementById('textInput').value;
-	chrome.storage.sync.set({'textarea': userInput});
+	blocs[this.id] = this.value;
+	chrome.storage.sync.set({'blocs': blocs});
 };
 
 (function(window, document, undefined){
 	//chrome.storage.sync.clear();
 
 	window.onload = init;
-
+	
 	function init(){
-		var txtInput = document.getElementById('textInput');
-		txtInput.addEventListener('input', saveTxt);
-		chrome.storage.sync.get('textarea', function(txt){
-			if(txt['textarea'] == undefined){
-				txtInput.value = "";
-			}else{
-				txtInput.value = txt['textarea']
+		focused = document.getElementsByClassName('focus')[0];
+		chrome.storage.sync.get(['blocs', 'blocsCount'], function(item){
+			if (chrome.runtime.lastError) {
+				console.log(chrome.runtime.lastError.message);
 			}
+
+			if(item['blocs'] != undefined) {
+				blocs = item['blocs'];
+			}else{
+				blocs = {'1':'', '2':'', '3':''};
+			}
+			if(item['blocsCount'] != undefined) {
+				blocsCount = item['blocsCount'];
+			}else{
+				blocsCount = 1;
+			}
+			for (var key in blocs) {
+			  if (blocs.hasOwnProperty(key)) {
+				var bloc = document.getElementById(key);
+				bloc.addEventListener('input', saveTxt);
+				bloc.value = blocs[key];
+			  }
+			};
 		});
 	};
 
