@@ -41,23 +41,32 @@ body{
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
 }
-.bloc textarea{
+.title{
+	height: 10%;
+	max-height: 50px;
+	font-size: 24pt;
+	overflow:hidden;
 	padding: 5px;
 	width: 80vw;
 	border: none;
     resize: none;	
 
 }
-.bloc textarea:focus{
+.title:focus{
     outline: none !important;
 	border: none !important;
-}
-.title{
-	height: 10%;
-	font-size: 20px
 }
 .txt{
 	color: #ededed;
 	height: 90%;
 	font-size: 14pt;
+	padding: 5px;
+	width: 80vw;
+	border: none;
+    resize: none;	
+}
+.txt:focus{
+	outline: none !important;
+	border: none !important;
+
 }

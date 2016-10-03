@@ -6,7 +6,8 @@
 	// Recommended
 	//"default_locale": "en",
 	"description": "Take notes in your new tab.",
-	
+	"icons": {"128": "icon128.png"},
+
 	"permissions": [
 		"storage"
 	],

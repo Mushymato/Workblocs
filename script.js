@@ -50,14 +50,17 @@ function changeFocus(){
 			for (var key in blocs) {
 			  if (blocs.hasOwnProperty(key)) {
 				var bloc = document.getElementById(key);
-				var blocTxt = bloc.getElementsByClassName("txt")[0];
-					blocTxt.addEventListener('input', saveTitle);
-					blocTxt.addEventListener('focus', changeFocus);
-					blocTxt.value = blocs[key][1];
+				
 				var blocTitle = bloc.getElementsByClassName("title")[0];
 					blocTitle.addEventListener('input', saveTitle);
 					blocTitle.addEventListener('focus', changeFocus);
 					blocTitle.value = blocs[key][0];
+
+				var blocTxt = bloc.getElementsByClassName("txt")[0];
+					blocTxt.addEventListener('input', saveTxt);
+					blocTxt.addEventListener('focus', changeFocus);
+					blocTxt.value = blocs[key][1];
+
 				bloc.style.display = "block";
 			  }
 			};
