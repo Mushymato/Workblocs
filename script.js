@@ -24,8 +24,8 @@ function changeFocus(){
 
 	window.onload = init;
 	
+	
 	function init(){
-		focused = document.getElementsByClassName('focus')[0];
 		chrome.storage.sync.get(['blocs', 'blocsCount', 'focus'], function(item){
 			if (chrome.runtime.lastError) {
 				console.log(chrome.runtime.lastError.message);
