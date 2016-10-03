@@ -21,21 +21,22 @@ body{
 .focus{
 	color: black !important;
 	display: block !important;
-	width: 80% !important;
+	width: 70% !important;
 	height: 100% !important;
 }
 .bloc{
 	display:none;
 	color: #ededed;
-	width: 8%;
+	width: 10%;
 	height: 100%;
 	margin-left: 1%;
 	font-size: 14pt;
 	float: left;
 	border: none;
-	box-shadow: 0px 0px 20px #A9A9A9;
+	box-shadow: 0px 0px 5px #A9A9A9;
     resize: none;
 	overflow:hidden;
+	padding: 3px;
 	
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
