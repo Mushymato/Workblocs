@@ -1,50 +1,63 @@
-*{margin: 0px; padding: 0px}
+*{
+	margin: 0px; 
+	padding: 0px; 
+	font-family: "Courier New", Courier, monospace;	
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
 * a{
 	display: block;
 	color: #A9A9A9;
-	font-size: 30pt;
 	text-decoration: none;
-	z-index: 3;
-	float:left;
 }
-
 body{
 	background-color:#F0F0F0;
-	font-family: "Courier New", Courier, monospace;
 }
 #blocWrapper{
-	width:90vw;
-	margin:auto;
-	padding: 1vh 1vw;
-	height: 90vh;
+	width:96vw;
+	margin:10px auto;
+	height:96vh;
 }
 .focus{
-	color: black !important;
 	display: block !important;
-	width: 70% !important;
-	height: 100% !important;
+	width: 80% !important;
+}
+.focus *{
+	color: black !important;
 }
 .bloc{
-	display:none;
-	color: #ededed;
+	display: none;
 	width: 10%;
 	height: 100%;
-	margin-left: 1%;
-	font-size: 14pt;
+	border: 1px solid #F0F0F0;
 	float: left;
-	border: none;
 	box-shadow: 0px 0px 5px #A9A9A9;
-    resize: none;
 	overflow:hidden;
-	padding: 3px;
+	background:white;
 	
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+}
+.bloc textarea{
+	padding: 5px;
+	width: 80vw;
+	border: none;
+    resize: none;	
 
 }
-.bloc:focus{
+.bloc textarea:focus{
     outline: none !important;
 	border: none !important;
+}
+.title{
+	height: 10%;
+	font-size: 20px
+}
+.txt{
+	color: #ededed;
+	height: 90%;
+	font-size: 14pt;
 }

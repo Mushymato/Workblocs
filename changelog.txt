@@ -1,3 +1,6 @@
+0.0.3
+	-Added Titles
+	-Changed margin sizes
 0.0.2
 	-Added muliple blocs
 0.0.1

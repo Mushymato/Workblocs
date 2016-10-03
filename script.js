@@ -2,15 +2,20 @@ var blocs;
 var blocsCount;
 var focused;
 
+function saveTitle(){
+	blocs[this.parentElement.id][0] = this.value;
+	chrome.storage.sync.set({'blocs': blocs});
+};
+
 function saveTxt(){
-	blocs[this.id] = this.value;
+	blocs[this.parentElement.id][1] = this.value;
 	chrome.storage.sync.set({'blocs': blocs});
 };
 
 function changeFocus(){
 	focused.className = focused.className.replace( /(?:^|\s)focus(?!\S)/g , '' );
-	this.className += " focus";
-	focused = this;
+	this.parentElement.className += " focus";
+	focused = this.parentElement;
 	chrome.storage.sync.set({'focus':focused.id})
 }
 
@@ -29,12 +34,12 @@ function changeFocus(){
 			if(item['blocs'] != undefined) {
 				blocs = item['blocs'];
 			}else{
-				blocs = {'1':'', '2':'', '3':''};
+				blocs = {'1':['', ''], '2':['', ''], '3':['', '']};
 			}
 			if(item['blocsCount'] != undefined) {
 				blocsCount = item['blocsCount'];
 			}else{
-				blocsCount = 1;
+				blocsCount = 3;
 			}
 			if(item['focus'] != undefined){
 				focused = document.getElementById(item['focus']);
@@ -45,13 +50,17 @@ function changeFocus(){
 			for (var key in blocs) {
 			  if (blocs.hasOwnProperty(key)) {
 				var bloc = document.getElementById(key);
-				bloc.addEventListener('input', saveTxt);
-				bloc.addEventListener('focus', changeFocus);
-				bloc.value = blocs[key];
-				bloc.style.display = "block"
+				var blocTxt = bloc.getElementsByClassName("txt")[0];
+					blocTxt.addEventListener('input', saveTitle);
+					blocTxt.addEventListener('focus', changeFocus);
+					blocTxt.value = blocs[key][1];
+				var blocTitle = bloc.getElementsByClassName("title")[0];
+					blocTitle.addEventListener('input', saveTitle);
+					blocTitle.addEventListener('focus', changeFocus);
+					blocTitle.value = blocs[key][0];
+				bloc.style.display = "block";
 			  }
 			};
-			
 		});
 	};
 
