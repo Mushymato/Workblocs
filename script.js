@@ -23,46 +23,62 @@ function newBloc(){
 	blocs[newId] = ['', ''];
 	chrome.storage.local.set({'blocs': blocs});
 
-	addBloc(newId, this.id);
+	addBloc(newId);
+	if (document.getElementsByClassName('focus').length == 0){
+		focused = document.getElementById(newId);
+		focused.className += ' focus';
+	}
+	
 	return false;
 }
-/* <div class="bloc" id="default"><input  placeholder="Title" spellcheck="false" class="title"></input><textarea placeholder="Write here." spellcheck="false" class="txt"></textarea></div> */
-function addBloc(newId, direction = 'right'){	
-	var	newTitle = document.createElement('input');
-		newTitle.className += "title";
-		newTitle.setAttribute('placeholder', 'Title');
-		newTitle.setAttribute('spellcheck', 'false');
+function addBloc(newId){
+	if (document.getElementById(newId) == undefined){
+		var	newTitle = document.createElement('input');
+			newTitle.className += 'title';
+			newTitle.setAttribute('placeholder', 'Title');
+			newTitle.setAttribute('spellcheck', 'false');
+			
+		var	newTxt = document.createElement('textarea');
+			newTxt.className += 'txt';
+			newTxt.setAttribute('placeholder', 'Write here');
+			newTxt.setAttribute('spellcheck', 'false');
 		
-	var	newTxt = document.createElement('textarea');
-		newTxt.className += "txt";
-		newTxt.setAttribute('placeholder', 'Write here');
-		newTxt.setAttribute('spellcheck', 'false');
+		var newX = document.createElement('a');
+			newX.className += 'closeBloc';
+			newX.setAttribute('href', '#');
+			newX.innerHTML = '&#10005;';
 
-	var newDiv = document.createElement('div');
-		newDiv.className += "bloc";
-		newDiv.setAttribute('id', newId);
-		newDiv.appendChild(newTitle);
-		newDiv.appendChild(newTxt);
-	
-	var blocWrapper = document.getElementById('blocWrapper');
-	blocWrapper.appendChild(newDiv);
-	
-	initBloc(newId);
-	
+		var newDiv = document.createElement('div');
+			newDiv.className += 'bloc';
+			newDiv.setAttribute('id', newId);
+			newDiv.appendChild(newX);
+			newDiv.appendChild(newTitle);
+			newDiv.appendChild(newTxt);
+		
+		var blocWrapper = document.getElementById('blocWrapper');
+		blocWrapper.appendChild(newDiv);
+	}
+	initBloc(newId);	
 	return false;
 };
 
 function deleteBloc(){
 	var blocWrapper = document.getElementById('blocWrapper');
-	var delBloc = blocWrapper.childNodes[0];
+	var delBloc = blocWrapper.getElementsByClassName('bloc')[0];
 	delete blocs[delBloc.id];
 	chrome.storage.local.set({'blocs': blocs});
 	if (delBloc.className.match( /(?:^|\s)focus(?!\S)/g , '' )){
-		focused = document.getElementsByClassName('bloc')[0]
-		chrome.storage.local.set({'focus':focused.id});
-		
+		blocWrapper.removeChild(delBloc);
+		try{
+			focused = blocWrapper.getElementsByClassName('bloc')[0]
+			focused.className += ' focus'
+			chrome.storage.local.set({'focus':focused.id});
+		} catch(err){
+			focused = undefined;
+		}
+	} else{
+		blocWrapper.removeChild(delBloc);
 	};
-	blocWrapper.removeChild(delBloc);
 }
 
 function saveTitle(){
@@ -93,10 +109,11 @@ function changeFocus(){
 	return false;
 };
 function settings(){
-	chrome.storage.local.clear();	
+	chrome.storage.local.clear();
 }
 
 (function(window, document, undefined){
+	//chrome.storage.local.clear();	
 
 	window.onload = init;
 	
