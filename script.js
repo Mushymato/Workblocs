@@ -1,5 +1,6 @@
-var blocs = {'default':['','']};
-var blocsCount = 3;
+var order = ["1"];
+var blocs = {"1":['','']};
+var blocsCount = 1;
 var focused;
 
 function initBloc(key){
@@ -14,6 +15,9 @@ function initBloc(key){
 		blocTxt.addEventListener('input', saveTxt, false);
 		blocTxt.addEventListener('focus', changeFocus, false);
 		blocTxt.value = blocs[key][1];
+	
+	var blocX = bloc.getElementsByClassName('closeBloc')[0];
+		blocX.addEventListener('click', deleteBloc, false)
 }
  
 function newBloc(){
@@ -23,7 +27,7 @@ function newBloc(){
 	blocs[newId] = ['', ''];
 	chrome.storage.local.set({'blocs': blocs});
 
-	addBloc(newId);
+	addBloc(newId, this.id == "right");
 	if (document.getElementsByClassName('focus').length == 0){
 		focused = document.getElementById(newId);
 		focused.className += ' focus';
@@ -31,7 +35,7 @@ function newBloc(){
 	
 	return false;
 }
-function addBloc(newId){
+function addBloc(newId, isRight = true){
 	if (document.getElementById(newId) == undefined){
 		var	newTitle = document.createElement('input');
 			newTitle.className += 'title';
@@ -56,7 +60,15 @@ function addBloc(newId){
 			newDiv.appendChild(newTxt);
 		
 		var blocWrapper = document.getElementById('blocWrapper');
-		blocWrapper.appendChild(newDiv);
+		
+		if (isRight){
+			order.push(newId);
+			blocWrapper.appendChild(newDiv);
+		} else {
+			order.unshift(newId);
+			blocWrapper.insertBefore(newDiv, blocWrapper.firstChild);
+		}
+		chrome.storage.local.set({'order': order});
 	}
 	initBloc(newId);	
 	return false;
@@ -66,7 +78,13 @@ function deleteBloc(){
 	var blocWrapper = document.getElementById('blocWrapper');
 	var delBloc = blocWrapper.getElementsByClassName('bloc')[0];
 	delete blocs[delBloc.id];
-	chrome.storage.local.set({'blocs': blocs});
+	for(i=0; i<order.length; i++){
+		if (order[i] == delBloc.id){
+			order.splice(i, 1);
+		}
+	}	
+	chrome.storage.local.set({'blocs':blocs, 'order':order})
+	
 	if (delBloc.className.match( /(?:^|\s)focus(?!\S)/g , '' )){
 		blocWrapper.removeChild(delBloc);
 		try{
@@ -79,6 +97,11 @@ function deleteBloc(){
 	} else{
 		blocWrapper.removeChild(delBloc);
 	};
+	
+	
+	setTimeout(function(){
+		//document.getElementById('blocWrapper').style.opacity = 1;
+	}, 100);
 }
 
 function saveTitle(){
@@ -92,7 +115,7 @@ function saveTxt(){
 };
 
 function changeFocus(){
-	if (this == focused){
+	if (this.parentElement == focused){
 		return false;
 	}
 	var blocList = document.getElementsByClassName('bloc');
@@ -118,20 +141,17 @@ function settings(){
 	window.onload = init;
 	
 	function init(){
-		document.getElementById('del').addEventListener('click', deleteBloc, false);
-		document.getElementById('add').addEventListener('click', newBloc, false);
-		document.getElementById('settings').addEventListener('click', settings, false);
-		
-		chrome.storage.local.get(['blocs', 'blocsCount', 'focus'], function(item){
-			if(item['blocs'] != undefined) {blocs = item['blocs'];};
-			
-			for (var key in blocs) {
-			  if (blocs.hasOwnProperty(key)) {
-				addBloc(key);
-				initBloc(key);
-			  }
+		document.getElementById('left').addEventListener('click', newBloc, false);
+		document.getElementById('right').addEventListener('click', newBloc, false);
+		//document.getElementById('settings').addEventListener('click', settings, false);
+				
+		chrome.storage.local.get(['order','blocs', 'blocsCount', 'focus'], function(item){
+			if(item['blocs'] != undefined) {blocs = item['blocs'];}
+			if(item['order'] != undefined) {order = item['order'];}
+			for (i=0; i < order.length; i ++) {
+				addBloc(order[i]);
+				initBloc(order[i]);
 			}
-
 			if(item['blocsCount'] != undefined) {blocsCount = item['blocsCount'];}
 			if(item['focus'] != undefined){
 				focused = document.getElementById(item['focus']);
@@ -139,6 +159,23 @@ function settings(){
 				focused = document.getElementsByClassName('bloc')[0];
 			}
 			focused.className += ' focus';
+			
+			//overide tab
+			var textareas = document.getElementsByTagName('textarea');
+			var count = textareas.length;
+			for(var i=0;i<count;i++){
+				textareas[i].onkeydown = function(e){
+					if(e.keyCode==9 || e.which==9){
+						e.preventDefault();
+						var s = this.selectionStart;
+						this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+						this.selectionEnd = s+1; 
+					}
+				}
+			}
+			
+			document.getElementById('blocWrapper').style.opacity = 1;
+
 			return false;
 		});
 	};
