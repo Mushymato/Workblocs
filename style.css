@@ -96,8 +96,8 @@
 .focus *{
 	color: black !important;
 }
-.focus closeBloc{
-	display: none !important;
+.focus .closeBloc{
+	display: block !important;
 }
 .bloc{
 	position:relative;
@@ -142,6 +142,7 @@
 
 }
 .closeBloc{
+	display: none;
 	position:absolute;
 	top: 0px;
 	right: 0px;

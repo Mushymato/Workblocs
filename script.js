@@ -1,6 +1,5 @@
-var order = ["1"];
-var blocs = {"1":['','']};
-var blocsCount = 1;
+var order = ['1'];
+var blocs = {'1':['','']};
 var focused;
 
 function initBloc(key){
@@ -21,21 +20,25 @@ function initBloc(key){
 }
  
 function newBloc(){
-	blocsCount += 1;
-	chrome.storage.local.set({'blocsCount': blocsCount});	
-	var newId = parseInt(blocsCount);
+	var count = order.length + 1
+	var newId = count.toString();
 	blocs[newId] = ['', ''];
-	chrome.storage.local.set({'blocs': blocs});
 
-	addBloc(newId, this.id == "right");
+	if(this.id == "right"){
+		order.push(newId);
+	} else {
+		order.unshift(newId);
+	}
+	
+	addBloc(newId, this.id);
 	if (document.getElementsByClassName('focus').length == 0){
 		focused = document.getElementById(newId);
 		focused.className += ' focus';
 	}
-	
+	chrome.storage.local.set({'order': order, 'blocs': blocs, 'focused': focused});	
 	return false;
 }
-function addBloc(newId, isRight = true){
+function addBloc(newId, direction = 'right'){
 	if (document.getElementById(newId) == undefined){
 		var	newTitle = document.createElement('input');
 			newTitle.className += 'title';
@@ -61,14 +64,11 @@ function addBloc(newId, isRight = true){
 		
 		var blocWrapper = document.getElementById('blocWrapper');
 		
-		if (isRight){
-			order.push(newId);
+		if (direction == "right"){
 			blocWrapper.appendChild(newDiv);
 		} else {
-			order.unshift(newId);
 			blocWrapper.insertBefore(newDiv, blocWrapper.firstChild);
 		}
-		chrome.storage.local.set({'order': order});
 	}
 	initBloc(newId);	
 	return false;
@@ -82,7 +82,7 @@ function deleteBloc(){
 		if (order[i] == delBloc.id){
 			order.splice(i, 1);
 		}
-	}	
+	}
 	chrome.storage.local.set({'blocs':blocs, 'order':order})
 	
 	if (delBloc.className.match( /(?:^|\s)focus(?!\S)/g , '' )){
@@ -92,7 +92,7 @@ function deleteBloc(){
 			focused.className += ' focus'
 			chrome.storage.local.set({'focus':focused.id});
 		} catch(err){
-			focused = undefined;
+			newBloc();
 		}
 	} else{
 		blocWrapper.removeChild(delBloc);
@@ -145,14 +145,13 @@ function settings(){
 		document.getElementById('right').addEventListener('click', newBloc, false);
 		//document.getElementById('settings').addEventListener('click', settings, false);
 				
-		chrome.storage.local.get(['order','blocs', 'blocsCount', 'focus'], function(item){
+		chrome.storage.local.get(['order','blocs', 'focus'], function(item){
 			if(item['blocs'] != undefined) {blocs = item['blocs'];}
 			if(item['order'] != undefined) {order = item['order'];}
 			for (i=0; i < order.length; i ++) {
 				addBloc(order[i]);
 				initBloc(order[i]);
 			}
-			if(item['blocsCount'] != undefined) {blocsCount = item['blocsCount'];}
 			if(item['focus'] != undefined){
 				focused = document.getElementById(item['focus']);
 			}else{
