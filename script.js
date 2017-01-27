@@ -20,7 +20,11 @@ function initBloc(key){
 }
  
 function newBloc(){
-	var count = order.length + 1
+	var count = 0;
+	while(order.includes(count.toString())){
+		count += 1;
+	}
+	
 	var newId = count.toString();
 	blocs[newId] = ['', ''];
 
@@ -135,14 +139,57 @@ function settings(){
 	chrome.storage.local.clear();
 }
 
+function downloadBlocs() {
+	//credit to thiscouldbebetter.wordpress.com
+
+    var textToSave = "";
+	for(i = 0; i < order.length; i++){
+		textToSave += "[";
+		textToSave += blocs[order[i]][0].replace(/\n\r?/g, '<br />');
+		textToSave += "]\n";
+		textToSave += blocs[order[i]][1].replace(/\n\r?/g, '<br />');
+		textToSave += "\n";
+	}
+	
+    var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
+    var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
+    
+	var fileName = "Workblocs-" + new Date();
+ 
+    var downloadLink = document.createElement("a");
+    downloadLink.download = fileName;
+    downloadLink.innerHTML = "Download File";
+    downloadLink.href = textToSaveAsURL;
+    downloadLink.onclick = function(e){document.body.removeChild(e.target);};
+    downloadLink.style.display = "none";
+    document.body.appendChild(downloadLink);
+ 
+    downloadLink.click();
+}
+
 (function(window, document, undefined){
 	//chrome.storage.local.clear();	
 
 	window.onload = init;
 	
 	function init(){
+		// Capture Ctrl+S
+		var isCtrl = false;
+		document.onkeyup=function(e) {
+			isCtrl=false;
+		};
+		document.onkeydown=function(e){
+			if(e.which == 17) isCtrl=true;
+			if(e.which == 83 && isCtrl == true) {
+				 downloadBlocs();
+				 return false;
+			}
+		};
+
+		
 		document.getElementById('left').addEventListener('click', newBloc, false);
 		document.getElementById('right').addEventListener('click', newBloc, false);
+		
 		//document.getElementById('settings').addEventListener('click', settings, false);
 				
 		chrome.storage.local.get(['order','blocs', 'focus'], function(item){
