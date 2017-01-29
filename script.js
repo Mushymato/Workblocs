@@ -1,5 +1,5 @@
-var order = ['1'];
-var blocs = {'1':['','']};
+var order = ['0'];
+var blocs = {'0':['','']};
 var focused;
 
 function initBloc(key){
@@ -39,7 +39,7 @@ function newBloc(){
 		focused = document.getElementById(newId);
 		focused.className += ' focus';
 	}
-	chrome.storage.local.set({'order': order, 'blocs': blocs, 'focused': focused});	
+	chrome.storage.sync.set({'order': order, 'blocs': blocs, 'focus': focused.id});	
 	return false;
 }
 function addBloc(newId, direction = 'right'){
@@ -80,42 +80,48 @@ function addBloc(newId, direction = 'right'){
 
 function deleteBloc(){
 	var blocWrapper = document.getElementById('blocWrapper');
-	var delBloc = blocWrapper.getElementsByClassName('bloc')[0];
+	var blocList = blocWrapper.getElementsByClassName('bloc');
+	var delBloc;
+	for (i=0; i < blocList.length; i++){
+		if(blocList[i].id == this.parentNode.id){
+			delBloc = blocList[i];
+			break;
+		};
+	};
+	
 	delete blocs[delBloc.id];
 	for(i=0; i<order.length; i++){
 		if (order[i] == delBloc.id){
 			order.splice(i, 1);
 		}
 	}
-	chrome.storage.local.set({'blocs':blocs, 'order':order})
+	chrome.storage.sync.set({'blocs':blocs, 'order':order})
 	
+	blocWrapper.removeChild(delBloc);
 	if (delBloc.className.match( /(?:^|\s)focus(?!\S)/g , '' )){
-		blocWrapper.removeChild(delBloc);
 		try{
 			focused = blocWrapper.getElementsByClassName('bloc')[0]
 			focused.className += ' focus'
-			chrome.storage.local.set({'focus':focused.id});
+			chrome.storage.sync.set({'focus':focused.id});
 		} catch(err){
 			newBloc();
 		}
-	} else{
-		blocWrapper.removeChild(delBloc);
-	};
+	}
 	
 	
-	setTimeout(function(){
+	//setTimeout(function(){
 		//document.getElementById('blocWrapper').style.opacity = 1;
-	}, 100);
+	//}, 100);
 }
 
 function saveTitle(){
 	blocs[this.parentElement.id][0] = this.value;
-	chrome.storage.local.set({'blocs': blocs});
+	chrome.storage.sync.set({'blocs': blocs});
 };
 
 function saveTxt(){
 	blocs[this.parentElement.id][1] = this.value;
-	chrome.storage.local.set({'blocs': blocs});
+	chrome.storage.sync.set({'blocs': blocs});
 };
 
 function changeFocus(){
@@ -132,11 +138,11 @@ function changeFocus(){
 	
 	this.parentElement.className += ' focus';
 	focused = this.parentElement;
-	chrome.storage.local.set({'focus':focused.id});
+	chrome.storage.sync.set({'focus':focused.id});
 	return false;
 };
 function settings(){
-	chrome.storage.local.clear();
+	chrome.storage.sync.clear();
 }
 
 function downloadBlocs() {
@@ -154,7 +160,7 @@ function downloadBlocs() {
     var textToSaveAsBlob = new Blob([textToSave], {type:"text/plain"});
     var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
     
-	var fileName = "Workblocs-" + new Date();
+	var fileName = "Workblocs-" + new Date()+".txt";
  
     var downloadLink = document.createElement("a");
     downloadLink.download = fileName;
@@ -168,7 +174,7 @@ function downloadBlocs() {
 }
 
 (function(window, document, undefined){
-	//chrome.storage.local.clear();	
+	//chrome.storage.sync.clear();	
 
 	window.onload = init;
 	
@@ -185,14 +191,13 @@ function downloadBlocs() {
 				 return false;
 			}
 		};
-
 		
 		document.getElementById('left').addEventListener('click', newBloc, false);
 		document.getElementById('right').addEventListener('click', newBloc, false);
 		
 		//document.getElementById('settings').addEventListener('click', settings, false);
 				
-		chrome.storage.local.get(['order','blocs', 'focus'], function(item){
+		chrome.storage.sync.get(['order','blocs', 'focus'], function(item){
 			if(item['blocs'] != undefined) {blocs = item['blocs'];}
 			if(item['order'] != undefined) {order = item['order'];}
 			for (i=0; i < order.length; i ++) {
