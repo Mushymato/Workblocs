@@ -17,11 +17,11 @@ body{
 	background-color:#3a3a3a;
 }
 .title{
-	color: #FFFFFF;
+	color: #A8A8A8 !important;
 	background-color:#3a3a3a;
 }
 .txt{
-	color: #FFFFFF;
+	color: #A8A8A8 !important;
 	background-color:#3a3a3a;
 }
 .focus *{
