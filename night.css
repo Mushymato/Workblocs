@@ -1,0 +1,29 @@
+* a{
+	color: #FFFFFF;
+}
+#clock{
+	color: #FFFFFF;
+}
+body{
+	background-color:#000000;
+}
+.add{
+	border: 3px dashed #F0F0F0;
+	opacity: 0.2;
+}
+.bloc{
+	border: 1px solid #505050;
+	box-shadow: 0px 0px 5px #505050;
+	background-color:#3a3a3a;
+}
+.title{
+	color: #FFFFFF;
+	background-color:#3a3a3a;
+}
+.txt{
+	color: #FFFFFF;
+	background-color:#3a3a3a;
+}
+.focus *{
+	color: #FFFFFF !important;
+}

@@ -1,3 +1,8 @@
+0.0.7
+	-clock
+	-nightly option
+0.0.6
+	-\r\n new lines in saved files
 0.0.5
 	-Bug fixes
 0.0.4

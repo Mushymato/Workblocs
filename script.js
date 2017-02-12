@@ -1,6 +1,7 @@
 var order = ['0'];
 var blocs = {'0':['','']};
 var focused;
+var night = true;
 
 function initBloc(key){
 	var bloc = document.getElementById(key);
@@ -151,9 +152,9 @@ function downloadBlocs() {
     var textToSave = "";
 	for(i = 0; i < order.length; i++){
 		textToSave += "[";
-		textToSave += blocs[order[i]][0].replace(/\n\r?/g, '<br />');
+		textToSave += blocs[order[i]][0].replace(/\n\r?/g, '\r\n');
 		textToSave += "]\n";
-		textToSave += blocs[order[i]][1].replace(/\n\r?/g, '<br />');
+		textToSave += blocs[order[i]][1].replace(/\n\r?/g, '\r\n');
 		textToSave += "\n";
 	}
 	
@@ -173,12 +174,41 @@ function downloadBlocs() {
     downloadLink.click();
 }
 
+//clock
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('clock').innerHTML = h + ":" + m + ":" + s;
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+//styleSheets
+function nightly(){
+	if(!night){
+		document.styleSheets[1].disabled = true;
+		night = true;
+	}else{
+		document.styleSheets[1].disabled = false;
+		night = false;
+	}
+	chrome.storage.sync.set({'night': night});
+}
+
+
 (function(window, document, undefined){
 	//chrome.storage.sync.clear();	
 
 	window.onload = init;
 	
 	function init(){
+		startTime()
 		// Capture Ctrl+S
 		var isCtrl = false;
 		document.onkeyup=function(e) {
@@ -194,10 +224,16 @@ function downloadBlocs() {
 		
 		document.getElementById('left').addEventListener('click', newBloc, false);
 		document.getElementById('right').addEventListener('click', newBloc, false);
-		
-		//document.getElementById('settings').addEventListener('click', settings, false);
+		document.getElementById('clock').addEventListener('click', nightly, false);
 				
-		chrome.storage.sync.get(['order','blocs', 'focus'], function(item){
+		chrome.storage.sync.get(['order','blocs', 'focus', 'night'], function(item){
+			//get night sheet
+			if(item['night'] != undefined){
+				night = item['night'];
+			}
+			nightly();
+			
+			//load blocs
 			if(item['blocs'] != undefined) {blocs = item['blocs'];}
 			if(item['order'] != undefined) {order = item['order'];}
 			for (i=0; i < order.length; i ++) {

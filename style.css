@@ -12,76 +12,80 @@
     transition: all 0.2s ease;
     -webkit-transition: all 0.2s ease;
 }
-/* #toolbar{
+
+header{
 	position: absolute;
 	top:0px;
 	left:0px;
 	width: 100%;
 	height: 5%;
-    opacity: 0;
 	font-size: 30pt;
 	z-index: 99;
-
-    transition: all 0.2s ease;
+}
+#clock:hover{
+	opacity:1
+}
+#clock{
+	opacity: 0;
+	width:30%;
+	margin: 5px auto;
+	text-align:center;
+	color: #000000;
+	transition: all 0.2s ease;
     -webkit-transition: all 0.2s ease;
 }
-#toolbar:hover{
-    opacity: 1;
-	background: linear-gradient(white, rgba(0,0,0,0));
+@media (max-width: 800px){
+	header{
+		margin: 8px auto;
+		font-size: 20px;
+	}	
 }
-#toolbar a{
-	float: left;
-	height: 100%;
-	padding: 0px 1vw;
+@media (max-width: 200px){
+	#clock{
+		display: none;
+	}
+}
 
-}
-#settings{
-	width:50%;
-	text-align:center;
-}
-#del{
-	position: relative;
-	top: 5px;
-	width: 25%;
-	text-align: left;
-}
-#add{
-	position: relative;
-	top: 5px;
-	width: 25%;
-	text-align: right;
-}
- */body{
+body{
 	background-color:#F0F0F0;
 }
 .add{
-	width: 8vw;
+	width: 7vw;
 	height: 96vh;
 	border: 3px dashed #A9A9A9;
-	margin-top: 1px;
 	font-size: 50pt;
 	text-align:center;
 	line-height: 96vh;
 	opacity: 0.1;
+	z-index: 1;
 }
 .add:hover{
 	opacity: 1;
 }
+@media (max-width: 400px){
+	.add{
+		width: 5vw;
+		height: 5vw;
+		line-height: 5vw;
+		font-size: 20pt;
+	}	
+}
 #left{
-	margin-left: 10px;
+	margin-left: 1vw;
 	float:left;
 }
 #right{
-	margin-right: 10px;
+	margin-right: 1vw;
 	float:right;
 }
 
 #blocWrapper{
+	z-index: 1;
 	opacity:0;
 	width:80vw;
 	height:96vh;
 	display: flex;
-	margin: 5px auto;
+	margin: 10px auto;
 	flex-direction: row;
 	justify-content: center;
 	align-items: stretch;
@@ -94,7 +98,7 @@
 	flex: 1 0 60% !important;
 }
 .focus *{
-	color: black !important;
+	color: #000000 !important;
 }
 .focus .closeBloc{
 	display: block !important;
@@ -105,19 +109,19 @@
 	float: left;
 	box-shadow: 0px 0px 5px #A9A9A9;
 	overflow:hidden;
-	background:white;
+	background-color:#FFFFFF;
 	flex: 0.001 1 15%;
     transition: all 0.5s ease;
     -webkit-transition: all 0.5s ease;
 	tab-size: 4;
 }
 .title{
-	color: #ededed;
+	color: #EDEDED;
 	height: 10%;
 	max-height: 50px;
 	font-size: 24pt;
 	overflow:hidden;
-	padding: 5px;
+	padding: 8px;
 	width: 80vw;
 	border: none;
     resize: none;	
@@ -128,10 +132,10 @@
 	border: none !important;
 }
 .txt{
-	color: #ededed;
+	color: #EDEDED;
 	height: 90%;
 	font-size: 14pt;
-	padding: 5px;
+	padding: 8px;
 	width: 80vw;
 	border: none;
     resize: none;	
