@@ -229,7 +229,7 @@ function nightly(){
 		chrome.storage.sync.get(['order','blocs', 'focus', 'night'], function(item){
 			//get night sheet
 			if(item['night'] != undefined){
-				night = item['night'];
+				night = !item['night'];
 			}
 			nightly();
 			
