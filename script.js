@@ -1,6 +1,6 @@
 var order = ['0'];
 var blocs = {'0':['','']};
-var focused;
+var focused = undefined;
 var night = true;
 
 function initBloc(key){
@@ -177,16 +177,24 @@ function downloadBlocs() {
 //clock
 function startTime() {
     var today = new Date();
+	var ye = today.getFullYear();
+	var mo = today.getMonth() + 1;
+	var da = today.getDate();
+	mo = adjTime(mo);
+	da = adjTime(da);
+	document.getElementById('ymd').innerHTML = ye + "-" + mo + "-" + da;
     var h = today.getHours();
     var m = today.getMinutes();
     var s = today.getSeconds();
-    m = checkTime(m);
-    s = checkTime(s);
-    document.getElementById('clock').innerHTML = h + ":" + m + ":" + s;
+	h = adjTime(h)
+    m = adjTime(m);
+    s = adjTime(s);
+    document.getElementById('hms').innerHTML = h + ":" + m + ":" + s;
     var t = setTimeout(startTime, 500);
 }
-function checkTime(i) {
-    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+function adjTime(i) {
+	// add zero in front of numbers < 10
+    if (i < 10) {i = "0" + i};
     return i;
 }
 //styleSheets
@@ -208,7 +216,8 @@ function nightly(){
 	window.onload = init;
 	
 	function init(){
-		startTime()
+		startTime();
+		
 		// Capture Ctrl+S
 		var isCtrl = false;
 		document.onkeyup=function(e) {
