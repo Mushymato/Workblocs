@@ -1,7 +1,7 @@
 *{
-	margin: 0px; 
-	padding: 0px; 
-	font-family: "Courier New", Courier, monospace;	
+	margin: 0px;
+	padding: 0px;
+	font-family: "Courier New", Courier, monospace;
 	box-sizing: border-box;
     -webkit-box-sizing: border-box;
 }
@@ -49,8 +49,12 @@ header div{
 @media (max-width: 800px){
 	header{
 		margin: 8px auto;
-		font-size: 20px;
-	}	
+		font-size: 2vh;
+	}
+	#hms{
+		border-top: 1px solid #000000;
+		font-size:3vh;
+	}
 }
 @media (max-width: 200px){
 	#clock{
@@ -62,11 +66,74 @@ body{
 	background-color:#F0F0F0;
 	font-size: 100%;
 }
+
+#settings{
+	display:none;
+	position:absolute;
+	top: 5vh;
+	left: 15vw;
+	margin: auto;
+	height: 90vh;
+	width: 75vw;
+	z-index: 101;
+	background-color: #3a3a3a;
+	border: 1px solid #F0F0F0;
+}
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  /*round slider*/
+  border-radius: 34px;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  /*round slider*/
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
 .add{
 	width: 7vw;
 	height: 96vh;
 	border: 3px dashed #A9A9A9;
-	font-size: 50pt;
+	font-size: 10vh;
 	text-align:center;
 	line-height: 96vh;
 	opacity: 0.1;
@@ -80,8 +147,8 @@ body{
 		width: 5vw;
 		height: 5vw;
 		line-height: 5vw;
-		font-size: 20pt;
-	}	
+		font-size: 2vw;
+	}
 }
 #left{
 	margin-left: 1vw;
@@ -104,7 +171,7 @@ body{
 	align-items: stretch;
     transition: all 0.1s ease;
     -webkit-transition: all 0.1s ease;
-	
+
 }
 .focus{
 	display: block !important;
@@ -131,11 +198,11 @@ body{
 .title{
 	color: #A8A8A8;
 	height: 8%;
-	font-size: 6vh;
+	font-size: 2em;
 	overflow:hidden;
 	width: 80vw;
 	border: none;
-    resize: none;	
+    resize: none;
 	padding-left: 5px;
 }
 .title:focus{
@@ -145,10 +212,10 @@ body{
 .txt{
 	color: #EDEDED;
 	height: 92%;
-	font-size: 3vh;
+	font-size: 1em;
 	width: 80vw;
 	border: none;
-    resize: none;	
+    resize: none;
 	padding-left: 5px;
 }
 .txt:focus{
@@ -162,14 +229,14 @@ body{
 	top: 0px;
 	right: 0px;
 	opacity: 0.1;
-	min-width: 40px;
-	min-height: 40px;
-	width: 4vh;
-	height: 4vh;
+	/*min-width: 10px;
+	min-height: 10px;*/
+	width: 6vh;
+	height: 6vh;
 	z-index: 3;
-	font-size: 30pt;
+	font-size: 6vh;
+	line-height:8vh;
 	box-sizing: content-box;
-
 }
 .closeBloc:hover{
 	opacity: 0.5;

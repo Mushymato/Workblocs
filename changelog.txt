@@ -1,5 +1,6 @@
 0.0.8
 	-clock position moved
+	-added date to clock
 0.0.7
 	-clock
 	-nightly option

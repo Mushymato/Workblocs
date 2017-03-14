@@ -14,6 +14,15 @@
 	</div>
 </header>
 <body>
+	<div id="settings">
+		<a href="#" id='closeSet'>&#10005;</a>
+		<label class="switch">
+			<input id="nightly" type="checkbox" name="nightly" onclick="nightly();">
+			<div class="slider"></div>
+		</label>
+		<input id="font" type="range" name="Font Size" min="1" max="40" onclick="alert(document.getElementById("font").value);">
+		</form>
+	</div>
 	<a href="#" class="add" id="left">+</a>
 	<a href="#" class="add" id="right">+</a>
 	<div id="blocWrapper">
