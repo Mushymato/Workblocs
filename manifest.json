@@ -2,7 +2,7 @@
 	"name": "Workblocs - New Tab",
 	"short_name": "Workblocs",
 	"description": "Take notes in your new tab.",
-	"version": "0.0.9",
+	"version": "0.1.0",
 	"manifest_version": 3,
 	"icons": {"128": "icon128.png"},
 	"permissions": [
