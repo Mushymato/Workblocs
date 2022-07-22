@@ -164,7 +164,7 @@ function downloadBlocs() {
 	var textToSaveAsURL = window.URL.createObjectURL(textToSaveAsBlob);
 	// alert(textToSaveAsURL);
 
-	var fileName = "Workblocs-" + new Date() + ".txt";
+	var fileName = "Workblocs-" + (new Date()).toISOString() + ".txt";
 
 	var downloadLink = document.createElement("a");
 	downloadLink.download = fileName;
@@ -240,7 +240,8 @@ function nightly() { //night/day mode
 			isCtrl = false;
 		};
 		document.onkeydown = (e) => {
-			if (e.key == "ctrl") isCtrl = true;
+			console.log(e.key)
+			if (e.key == "Control") isCtrl = true;
 			if (e.key == "s" && isCtrl == true) {
 				downloadBlocs();
 				return false;
