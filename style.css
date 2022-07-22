@@ -1,75 +1,85 @@
-*{
+* {
 	margin: 0px;
 	padding: 0px;
 	font-family: "Courier New", Courier, monospace;
 	box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
 }
-* a{
+
+* a {
 	display: block;
 	color: #A9A9A9;
 	text-decoration: none;
-    transition: all 0.2s ease;
-    -webkit-transition: all 0.2s ease;
+	transition: all 0.2s ease;
+	-webkit-transition: all 0.2s ease;
 }
 
-header{
+header {
 	position: absolute;
-	top:86vh;
-	left:0px;
+	top: 84vh;
+	left: 0px;
 	width: 100%;
-	height: 10vh;
 	text-align: center;
 	font-size: 30pt;
 	z-index: 99;
 }
-header div{
+
+header div {
 	color: #000000;
 	transition: all 0.2s ease;
-    -webkit-transition: all 0.2s ease;
+	-webkit-transition: all 0.2s ease;
 	user-select: none;
 	-webkit-user-select: none;
 }
-#clock{
+
+#clock {
 	display: inline-block;
 	margin: auto;
 	opacity: 0.1;
+	padding: 0.1em;
 }
-#clock:hover{
-	opacity:1
+
+#clock:hover {
+	opacity: 1;
+	background-color: rgba(255, 255, 255, 0.5);
 }
-#ymd{
+
+#ymd {
 	height: 3.5vh;
-	font-size:3vh;
+	font-size: 3vh;
 }
-#hms{
-    border-top: 1px solid #000000;
-	font-size:7vh;
+
+#hms {
+	border-top: 1px solid #000000;
+	font-size: 7vh;
 }
-@media (max-width: 800px){
-	header{
+
+@media (max-width: 800px) {
+	header {
 		margin: 8px auto;
 		font-size: 2vh;
 	}
-	#hms{
+
+	#hms {
 		border-top: 1px solid #000000;
-		font-size:3vh;
+		font-size: 3vh;
 	}
 }
-@media (max-width: 200px){
-	#clock{
+
+@media (max-width: 200px) {
+	#clock {
 		display: none;
 	}
 }
 
-body{
-	background-color:#F0F0F0;
+body {
+	background-color: #F0F0F0;
 	font-size: 100%;
 }
 
-#settings{
-	display:none;
-	position:absolute;
+#settings {
+	display: none;
+	position: absolute;
 	top: 5vh;
 	left: 15vw;
 	margin: auto;
@@ -79,153 +89,187 @@ body{
 	background-color: #3a3a3a;
 	border: 1px solid #F0F0F0;
 }
+
 /* The switch - the box around the slider */
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
 }
 
 /* Hide default HTML checkbox */
-.switch input {display:none;}
+.switch input {
+	display: none;
+}
 
 /* The slider */
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-  /*round slider*/
-  border-radius: 34px;
-}
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-  /*round slider*/
-  border-radius: 50%;
-}
-input:checked + .slider {
-  background-color: #2196F3;
-}
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+	/*round slider*/
+	border-radius: 34px;
 }
 
-.add{
-	width: 7vw;
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+	/*round slider*/
+	border-radius: 50%;
+}
+
+input:checked+.slider {
+	background-color: #2196F3;
+}
+
+input:focus+.slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+.add {
+	/* width: 7vw; */
 	height: 96vh;
 	border: 3px dashed #A9A9A9;
 	font-size: 10vh;
-	text-align:center;
+	text-align: center;
 	line-height: 96vh;
 	opacity: 0.1;
 	z-index: 1;
 }
-.add:hover{
+
+.add:hover {
 	opacity: 1;
 }
-@media (max-width: 400px){
-	.add{
+
+@media (max-width: 400px) {
+	.add {
 		width: 5vw;
 		height: 5vw;
 		line-height: 5vw;
 		font-size: 2vw;
 	}
 }
-#left{
+
+#left {
 	margin-left: 1vw;
-	float:left;
-}
-#right{
-	margin-right: 1vw;
-	float:right;
+	float: left;
 }
 
-#blocWrapper{
+#right {
+	margin-right: 1vw;
+	float: right;
+}
+
+#blocWrapper {
 	z-index: 1;
-	opacity:0;
-	width:80vw;
-	height:96vh;
+	opacity: 0;
+	/* width:80vw; */
+	height: 96vh;
 	display: flex;
 	margin: 10px auto;
 	flex-direction: row;
 	justify-content: center;
 	align-items: stretch;
-    transition: all 0.1s ease;
-    -webkit-transition: all 0.1s ease;
-
+	transition: all 0.1s ease;
+	-webkit-transition: all 0.1s ease;
 }
-.focus{
+
+.focus {
 	display: block !important;
 	flex: 1 0 60% !important;
 }
-.focus *{
+
+.focus * {
 	color: #000000 !important;
 }
-.focus .closeBloc{
+
+.focus .closeBloc {
 	display: block !important;
 }
-.bloc{
-	position:relative;
+
+.bloc {
+	position: relative;
 	border: 1px solid #A9A9A9;
 	float: left;
 	box-shadow: 0px 0px 5px #A9A9A9;
-	overflow:hidden;
-	background-color:#FFFFFF;
-	flex: 0.001 1 15%;
+	overflow: hidden;
+	background-color: #FFFFFF;
+	flex: 0.001 1 10%;
 	tab-size: 4;
-    transition: flex 0.5s ease;
-    -webkit-transition: flex 0.5s ease;
+	transition: flex 0.2s ease;
+	-webkit-transition: flex 0.2s ease;
 }
-.title{
+
+.title {
 	color: #A8A8A8;
 	height: 8%;
 	font-size: 2em;
-	overflow:hidden;
+	overflow: hidden;
 	width: 80vw;
 	border: none;
-    resize: none;
+	resize: none;
 	padding-left: 5px;
 }
-.title:focus{
-    outline: none !important;
+
+.title:focus {
+	outline: none !important;
 	border: none !important;
 }
-.txt{
+
+.txt {
 	color: #EDEDED;
 	height: 92%;
 	font-size: 1em;
-	width: 80vw;
+	width: 100%;
 	border: none;
-    resize: none;
+	resize: none;
 	padding-left: 5px;
 }
-.txt:focus{
+
+.txt:focus {
 	outline: none !important;
 	border: none !important;
 
 }
-.closeBloc{
+
+.txt::-webkit-scrollbar {
+	width: 0.5em;
+}
+
+/* 
+.txt::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+} */
+
+.txt::-webkit-scrollbar-thumb {
+	background-color: gray;
+}
+
+
+.closeBloc {
 	display: none;
-	position:absolute;
+	position: absolute;
 	top: 0px;
 	right: 0px;
 	opacity: 0.1;
@@ -235,9 +279,15 @@ input:checked + .slider:before {
 	height: 6vh;
 	z-index: 3;
 	font-size: 6vh;
-	line-height:8vh;
+	line-height: 8vh;
 	box-sizing: content-box;
 }
-.closeBloc:hover{
+
+.closeBloc:hover {
 	opacity: 0.5;
+}
+
+.notransition {
+	transition: none !important;
+	-webkit-transition: none !important;
 }
